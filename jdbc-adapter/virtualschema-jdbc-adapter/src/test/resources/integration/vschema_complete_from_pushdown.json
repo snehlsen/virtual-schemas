@@ -1,0 +1,289 @@
+{
+    "testSchema": [
+        "create table t1(c1_1 int, c1_2 int, c1_3 int)",
+        "create table t2(c2_1 int, c2_2 int, c2_3 int)",
+        "create table t3(c3_1 int, c3_2 int, c3_3 int)",
+        "create table t4(c4_1 int, c4_2 int, c4_3 int)",
+        "create table t5(c5_1 int, c5_2 int, c5_3 int)"
+    ],
+    "testCases": [
+        {
+            "testQuery": "select t1.c1_1 from vs.t1 inner join vs.t2 on c1_1=c2_1 inner join vs.t3 on c2_2=c3_2 inner join vs.t4 on c2_2=c3_2 and c1_2=c4_2",
+            "testGrepCode": "FP-01",
+            "testDescription": "Works if everything is connected with equi-conditions in ON-clauses - INNER JOIN chain with simple join conditions",
+            "expectedPushdownRequest": [
+                {
+                    "involvedTables": [
+                        {
+                            "columns": [
+                                {
+                                    "adapterNotes": "{\"jdbcDataType\":3,\"typeName\":\"DECIMAL\"}",
+                                    "dataType": {
+                                        "precision": 18,
+                                        "scale": 0,
+                                        "type": "DECIMAL"
+                                    },
+                                    "name": "C1_1"
+                                },
+                                {
+                                    "adapterNotes": "{\"jdbcDataType\":3,\"typeName\":\"DECIMAL\"}",
+                                    "dataType": {
+                                        "precision": 18,
+                                        "scale": 0,
+                                        "type": "DECIMAL"
+                                    },
+                                    "name": "C1_2"
+                                },
+                                {
+                                    "adapterNotes": "{\"jdbcDataType\":3,\"typeName\":\"DECIMAL\"}",
+                                    "dataType": {
+                                        "precision": 18,
+                                        "scale": 0,
+                                        "type": "DECIMAL"
+                                    },
+                                    "name": "C1_3"
+                                }
+                            ],
+                            "name": "T1"
+                        },
+                        {
+                            "columns": [
+                                {
+                                    "adapterNotes": "{\"jdbcDataType\":3,\"typeName\":\"DECIMAL\"}",
+                                    "dataType": {
+                                        "precision": 18,
+                                        "scale": 0,
+                                        "type": "DECIMAL"
+                                    },
+                                    "name": "C2_1"
+                                },
+                                {
+                                    "adapterNotes": "{\"jdbcDataType\":3,\"typeName\":\"DECIMAL\"}",
+                                    "dataType": {
+                                        "precision": 18,
+                                        "scale": 0,
+                                        "type": "DECIMAL"
+                                    },
+                                    "name": "C2_2"
+                                },
+                                {
+                                    "adapterNotes": "{\"jdbcDataType\":3,\"typeName\":\"DECIMAL\"}",
+                                    "dataType": {
+                                        "precision": 18,
+                                        "scale": 0,
+                                        "type": "DECIMAL"
+                                    },
+                                    "name": "C2_3"
+                                }
+                            ],
+                            "name": "T2"
+                        },
+                        {
+                            "columns": [
+                                {
+                                    "adapterNotes": "{\"jdbcDataType\":3,\"typeName\":\"DECIMAL\"}",
+                                    "dataType": {
+                                        "precision": 18,
+                                        "scale": 0,
+                                        "type": "DECIMAL"
+                                    },
+                                    "name": "C3_1"
+                                },
+                                {
+                                    "adapterNotes": "{\"jdbcDataType\":3,\"typeName\":\"DECIMAL\"}",
+                                    "dataType": {
+                                        "precision": 18,
+                                        "scale": 0,
+                                        "type": "DECIMAL"
+                                    },
+                                    "name": "C3_2"
+                                },
+                                {
+                                    "adapterNotes": "{\"jdbcDataType\":3,\"typeName\":\"DECIMAL\"}",
+                                    "dataType": {
+                                        "precision": 18,
+                                        "scale": 0,
+                                        "type": "DECIMAL"
+                                    },
+                                    "name": "C3_3"
+                                }
+                            ],
+                            "name": "T3"
+                        },
+                        {
+                            "columns": [
+                                {
+                                    "adapterNotes": "{\"jdbcDataType\":3,\"typeName\":\"DECIMAL\"}",
+                                    "dataType": {
+                                        "precision": 18,
+                                        "scale": 0,
+                                        "type": "DECIMAL"
+                                    },
+                                    "name": "C4_1"
+                                },
+                                {
+                                    "adapterNotes": "{\"jdbcDataType\":3,\"typeName\":\"DECIMAL\"}",
+                                    "dataType": {
+                                        "precision": 18,
+                                        "scale": 0,
+                                        "type": "DECIMAL"
+                                    },
+                                    "name": "C4_2"
+                                },
+                                {
+                                    "adapterNotes": "{\"jdbcDataType\":3,\"typeName\":\"DECIMAL\"}",
+                                    "dataType": {
+                                        "precision": 18,
+                                        "scale": 0,
+                                        "type": "DECIMAL"
+                                    },
+                                    "name": "C4_3"
+                                }
+                            ],
+                            "name": "T4"
+                        }
+                    ],
+                    "pushdownRequest": {
+                        "from": {
+                            "condition": {
+                                "expressions": [
+                                    {
+                                        "left": {
+                                            "columnNr": 1,
+                                            "name": "C2_2",
+                                            "tableName": "T2",
+                                            "type": "column"
+                                        },
+                                        "right": {
+                                            "columnNr": 1,
+                                            "name": "C3_2",
+                                            "tableName": "T3",
+                                            "type": "column"
+                                        },
+                                        "type": "predicate_equal"
+                                    },
+                                    {
+                                        "left": {
+                                            "columnNr": 1,
+                                            "name": "C1_2",
+                                            "tableName": "T1",
+                                            "type": "column"
+                                        },
+                                        "right": {
+                                            "columnNr": 1,
+                                            "name": "C4_2",
+                                            "tableName": "T4",
+                                            "type": "column"
+                                        },
+                                        "type": "predicate_equal"
+                                    }
+                                ],
+                                "type": "predicate_and"
+                            },
+                            "join_type": "inner",
+                            "left": {
+                                "condition": {
+                                    "left": {
+                                        "columnNr": 1,
+                                        "name": "C2_2",
+                                        "tableName": "T2",
+                                        "type": "column"
+                                    },
+                                    "right": {
+                                        "columnNr": 1,
+                                        "name": "C3_2",
+                                        "tableName": "T3",
+                                        "type": "column"
+                                    },
+                                    "type": "predicate_equal"
+                                },
+                                "join_type": "inner",
+                                "left": {
+                                    "condition": {
+                                        "left": {
+                                            "columnNr": 0,
+                                            "name": "C1_1",
+                                            "tableName": "T1",
+                                            "type": "column"
+                                        },
+                                        "right": {
+                                            "columnNr": 0,
+                                            "name": "C2_1",
+                                            "tableName": "T2",
+                                            "type": "column"
+                                        },
+                                        "type": "predicate_equal"
+                                    },
+                                    "join_type": "inner",
+                                    "left": {
+                                        "name": "T1",
+                                        "type": "table"
+                                    },
+                                    "right": {
+                                        "name": "T2",
+                                        "type": "table"
+                                    },
+                                    "type": "join"
+                                },
+                                "right": {
+                                    "name": "T3",
+                                    "type": "table"
+                                },
+                                "type": "join"
+                            },
+                            "right": {
+                                "name": "T4",
+                                "type": "table"
+                            },
+                            "type": "join"
+                        },
+                        "selectList": [
+                            {
+                                "columnNr": 0,
+                                "name": "C1_1",
+                                "tableName": "T1",
+                                "type": "column"
+                            },
+                            {
+                                "columnNr": 1,
+                                "name": "C1_2",
+                                "tableName": "T1",
+                                "type": "column"
+                            },
+                            {
+                                "columnNr": 0,
+                                "name": "C2_1",
+                                "tableName": "T2",
+                                "type": "column"
+                            },
+                            {
+                                "columnNr": 1,
+                                "name": "C2_2",
+                                "tableName": "T2",
+                                "type": "column"
+                            },
+                            {
+                                "columnNr": 1,
+                                "name": "C3_2",
+                                "tableName": "T3",
+                                "type": "column"
+                            },
+                            {
+                                "columnNr": 1,
+                                "name": "C4_2",
+                                "tableName": "T4",
+                                "type": "column"
+                            }
+                        ],
+                        "type": "select"
+                    }
+                }
+            ],
+            "expectedPushdownResponse": {
+                "Exasol": [
+                    "SELECT \"T1\".\"C1_1\", \"T1\".\"C1_2\", \"T2\".\"C2_1\", \"T2\".\"C2_2\", \"T3\".\"C3_2\", \"T4\".\"C4_2\" FROM \"LS\".\"T1\" INNER JOIN \"LS\".\"T2\" ON \"T1\".\"C1_1\" = \"T2\".\"C2_1\" INNER JOIN \"LS\".\"T3\" ON \"T2\".\"C2_2\" = \"T3\".\"C3_2\" INNER JOIN \"LS\".\"T4\" ON (\"T2\".\"C2_2\" = \"T3\".\"C3_2\" AND \"T1\".\"C1_2\" = \"T4\".\"C4_2\")"
+                ]
+            }
+        }
+    ]
+}
