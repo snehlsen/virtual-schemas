@@ -243,36 +243,6 @@
                                 "name": "C1_1",
                                 "tableName": "T1",
                                 "type": "column"
-                            },
-                            {
-                                "columnNr": 1,
-                                "name": "C1_2",
-                                "tableName": "T1",
-                                "type": "column"
-                            },
-                            {
-                                "columnNr": 0,
-                                "name": "C2_1",
-                                "tableName": "T2",
-                                "type": "column"
-                            },
-                            {
-                                "columnNr": 1,
-                                "name": "C2_2",
-                                "tableName": "T2",
-                                "type": "column"
-                            },
-                            {
-                                "columnNr": 1,
-                                "name": "C3_2",
-                                "tableName": "T3",
-                                "type": "column"
-                            },
-                            {
-                                "columnNr": 1,
-                                "name": "C4_2",
-                                "tableName": "T4",
-                                "type": "column"
                             }
                         ],
                         "type": "select"
@@ -281,7 +251,7 @@
             ],
             "expectedPushdownResponse": {
                 "Exasol": [
-                    "SELECT \"T1\".\"C1_1\", \"T1\".\"C1_2\", \"T2\".\"C2_1\", \"T2\".\"C2_2\", \"T3\".\"C3_2\", \"T4\".\"C4_2\" FROM \"LS\".\"T1\" INNER JOIN \"LS\".\"T2\" ON \"T1\".\"C1_1\" = \"T2\".\"C2_1\" INNER JOIN \"LS\".\"T3\" ON \"T2\".\"C2_2\" = \"T3\".\"C3_2\" INNER JOIN \"LS\".\"T4\" ON (\"T2\".\"C2_2\" = \"T3\".\"C3_2\" AND \"T1\".\"C1_2\" = \"T4\".\"C4_2\")"
+                    "SELECT \"T1\".\"C1_1\" FROM \"LS\".\"T1\" INNER JOIN \"LS\".\"T2\" ON \"T1\".\"C1_1\" = \"T2\".\"C2_1\" INNER JOIN \"LS\".\"T3\" ON \"T2\".\"C2_2\" = \"T3\".\"C3_2\" INNER JOIN \"LS\".\"T4\" ON (\"T2\".\"C2_2\" = \"T3\".\"C3_2\" AND \"T1\".\"C1_2\" = \"T4\".\"C4_2\")"
                 ]
             }
         }
